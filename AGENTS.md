@@ -56,11 +56,38 @@ task would have gone better with a missing skill. Mention changes in one line.
 
 ```text
 CMakeLists.txt, CMakePresets.json   project, GameLib pin, presets, the smoke run
-src/game/                           rules -> GameLib::core: rooms.cpp (the campaign as text grids), rules.hpp (numbers, tuning, Input),
-                                    session.cpp (one run: hero, hazards, crumbles, springs, saws, checkpoints, time)
-src/main.cpp                        AppConfig and runMain
-docs/GAMELIB_REVISION.md            the GameLib commit each change was validated with
+src/game/   rules -> GameLib::core only
+            rules.hpp/.cpp   numbers, tuning per world, Input and its text form
+            rooms.hpp/.cpp   the campaign: 33 rooms as text grids, saw tracks, hints
+            session.hpp/.cpp one run: hero (core::stepPlatformer), hazards, crumbles,
+                             springs, saws, flags, exits, time and deaths, events
+            demo_run.cpp     the built-in attract demo (a recorded world 1 run)
+src/app/    presentation -> GameLib::app, ui, fx, ai
+            leap_game.*      the Game: screens, input, run, wipes, banners, ending, demo
+            view.*           drawing a room (backdrop, tiles, objects, hero)
+            effects.*        dust, debris, rings, flash, shake, squash and stretch
+            sounds.*         synthesized effects and the five songs
+            profile.*        leap.ini (settings, campaign, bests) and leap-demo.txt
+            palette.hpp      colors per world
+src/main.cpp                AppConfig and runMain
+shaders/    tile.frag (every tile kind), hero.frag, saw.frag, flag.frag, backdrop.frag
+docs/GAMELIB_REVISION.md    the GameLib commit each change was validated with
 ```
+
+## Developer aids
+
+- `LEAP_START_ROOM=N` (0-32): PLAY starts in room N (screenshots of later rooms).
+- `LEAP_REPLAY=<file>`: a recording (`core::InputRecording` text, the format of
+  `leap-demo.txt`) drives the run instead of the keyboard, to watch the
+  campaign end to end.
+- The built-in demo (`src/game/demo_run.cpp`) and any saved `leap-demo.txt`
+  replay only under the rules they were recorded with: bump `kRulesVersion`
+  (`src/game/rules.hpp`) whenever a rule or a world 1 room changes, and
+  regenerate the built-in demo (a search over per-tick inputs driving
+  `Session`, kept outside the repository).
+- Room design: a room is left over the shorter wall of a chimney (there is
+  no wall grab); a held jump rises 3.25 tiles, a running jump clears about
+  5 tiles, a spring about 8 tiles.
 
 ## Commands
 

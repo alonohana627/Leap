@@ -36,14 +36,7 @@ if(GIT_FOUND)
     message(STATUS "Leap: using GameLib ${_gamelib_revision} from ${gamelib_SOURCE_DIR}")
 endif()
 
-add_subdirectory(src/game)
-
-add_executable(leap src/main.cpp)
-target_link_libraries(leap PRIVATE leap_game GameLib::app GameLib::fx)
-gamelib_target_warnings(leap)
-gamelib_copy_runtime(leap)
-# The game's own procedural shapes, embedded as SPIR-V.
-gamelib_add_shaders(leap SHADERS shaders/orb.frag)
+add_subdirectory(src)
 
 # Smoke test: launch, render 120 frames with the validation layer required,
 # exit cleanly. Exit code 77 (no Vulkan GPU) counts as skipped. The profile
