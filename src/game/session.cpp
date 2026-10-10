@@ -169,7 +169,9 @@ void Session::die()
     m_dyingTicks = 0;
     ++m_deaths;
     ++m_worldDeaths;
-    m_events.push({.kind = EventKind::Death, .at = m_hero.box.center()});
+    // A fall into a pit bursts at the bottom edge, where it can be seen.
+    const Vec2 at = m_hero.box.center();
+    m_events.push({.kind = EventKind::Death, .at = {at.x, std::min(at.y, kRoomSize.y - 6.0f)}});
 }
 
 void Session::stepObjects()
@@ -356,7 +358,7 @@ void Session::tick(const Input& input)
         left = Side::Right;
     } else if (center.y < 0.0f) {
         left = Side::Up;
-    } else if (m_hero.box.top() > kRoomSize.y) {
+    } else if (m_hero.box.top() > kRoomSize.y || (!exitAt(Side::Down) && m_hero.box.bottom() > kRoomSize.y + 2.0f)) {
         left = Side::Down;
     }
     if (left) {
