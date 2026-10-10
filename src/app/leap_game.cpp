@@ -403,6 +403,13 @@ void LeapGame::frame(gamelib::app::App& app, const gamelib::app::FrameInfo& info
             m_effects.firework(at, glow(srgb(kColors[static_cast<std::size_t>(i)]), 1.6f));
         }
     }
+    // A run started while the window is in the background (a gamepad's Start
+    // reaches the game without the focus) would sit frozen with no menu:
+    // show the pause menu, as a focus loss during play does.
+    if (app.isFocusPaused() && m_menus.is(ArcadeScreen::Playing) && !m_demoMode) {
+        m_menus.go(ArcadeScreen::Paused, m_time);
+        app.input().releaseAll();
+    }
     if (m_menus.gameOverDue(m_time)) {
         m_menus.setGameOverTitle("THE SUMMIT");
         m_menus.go(ArcadeScreen::GameOver, m_time);
