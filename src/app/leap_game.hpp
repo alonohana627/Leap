@@ -99,6 +99,8 @@ private:
     gamelib::fx::DebugOverlay m_debug;
     float m_time = 0.0f;
     float m_hintFade = 0.0f;
+    int m_frameTicks = 0;      // for the debug overlay
+    bool m_focusPaused = false; // for the debug overlay
 };
 
 } // namespace leap::app

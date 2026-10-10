@@ -383,6 +383,8 @@ void LeapGame::frame(gamelib::app::App& app, const gamelib::app::FrameInfo& info
     m_time = info.time;
     m_pressTaken = false;
     m_held = info.ticks == 0;
+    m_frameTicks = info.ticks;
+    m_focusPaused = app.isFocusPaused();
     m_wipe.update(info.seconds);
     m_demoWipe.update(info.seconds);
     m_effects.update(info.seconds);
@@ -606,6 +608,7 @@ void LeapGame::drawDebug(gamelib::draw::DrawList& list, const gamelib::core::Siz
         m_debug.box(view.rectToCanvas(gamelib::core::Rect::fromCenter(saw.position, {2.0f * r, 2.0f * r})),
                     Color{1.0f, 0.3f, 0.3f, 1.0f});
     }
+    m_debug.stat("LOOP", "TICKS " + std::to_string(m_frameTicks) + (m_focusPaused ? " FOCUS PAUSED" : ""));
     const auto& hero = session.hero();
     m_debug.stat("ROOM", std::to_string(session.room()) + " " + std::string{session.roomDef().name});
     m_debug.stat("POS", std::to_string(static_cast<int>(hero.box.x)) + "," + std::to_string(static_cast<int>(hero.box.y)));

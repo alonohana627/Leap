@@ -33,9 +33,9 @@ void main()
 
     // Eyes: white ovals with dark pupils, shifted towards the facing side.
     vec2 eyeCenter = vec2(facing * h.x * 0.28, -h.y * 0.18 + sprite.params.z * h.y * 0.08);
-    float spacing = h.x * 0.36;
+    float spacing = h.x * 0.5;
     float blink = clamp(sprite.params.y, 0.0, 1.0);
-    vec2 eyeSize = vec2(h.x * 0.17, max(h.y * 0.22 * (1.0 - blink), 0.25));
+    vec2 eyeSize = vec2(h.x * 0.2, max(h.y * 0.25 * (1.0 - blink), 0.25));
     float eyes = 1e5;
     float pupils = 1e5;
     for (int i = -1; i <= 1; i += 2) {
