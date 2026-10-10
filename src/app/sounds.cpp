@@ -34,9 +34,13 @@ Recipe _recipe(const Sfx sfx)
         return {{{tone(Wave::Pulse25, kD5, 0.09f, kA5)}, {noise(6000.0f, 0.05f, 2500.0f, 0.5f)}}, -18.0f};
     // A soft thud: low triangle drop and a puff of noise.
     case Sfx::Land: return {{{tone(Wave::Triangle, kG3, 0.06f, kC3)}, {noise(1800.0f, 0.04f, 600.0f, 0.6f)}}, -20.0f};
-    // A long even hiss, looped while sliding: no decay towards its end.
+    // A gritty scrape, looped while sliding. The synth gives every note a
+    // decaying envelope, so the loop is a run of short grains at a steady
+    // level rather than one long note that would pulse.
     case Sfx::SlideHiss:
-        return {{{noise(9000.0f, 0.25f, 9000.0f, 1.0f), noise(8000.0f, 0.25f, 9000.0f, 1.0f)}}, -27.0f};
+        return {{{noise(9000.0f, 0.05f, 7000.0f), noise(7600.0f, 0.05f, 8800.0f), noise(8400.0f, 0.05f, 6800.0f),
+                  noise(9600.0f, 0.05f, 8000.0f), noise(7200.0f, 0.05f, 9000.0f), noise(8800.0f, 0.05f, 7400.0f)}},
+                -26.0f};
     // A boing: a fast pitch sweep up with a wobble back.
     case Sfx::Spring:
         return {{{tone(Wave::Pulse50, kC4, 0.07f, kC6), tone(Wave::Pulse50, kG5, 0.12f, kE6, 0.7f)},
