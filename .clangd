@@ -1,0 +1,3 @@
+# clangd reads compile_commands.json from the debug build.
+CompileFlags:
+  CompilationDatabase: build/debug
