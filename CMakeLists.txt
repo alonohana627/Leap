@@ -36,8 +36,10 @@ if(GIT_FOUND)
     message(STATUS "Leap: using GameLib ${_gamelib_revision} from ${gamelib_SOURCE_DIR}")
 endif()
 
+add_subdirectory(src/game)
+
 add_executable(leap src/main.cpp)
-target_link_libraries(leap PRIVATE GameLib::app GameLib::fx)
+target_link_libraries(leap PRIVATE leap_game GameLib::app GameLib::fx)
 gamelib_target_warnings(leap)
 gamelib_copy_runtime(leap)
 # The game's own procedural shapes, embedded as SPIR-V.

@@ -56,6 +56,8 @@ task would have gone better with a missing skill. Mention changes in one line.
 
 ```text
 CMakeLists.txt, CMakePresets.json   project, GameLib pin, presets, the smoke run
+src/game/                           rules -> GameLib::core: rooms.cpp (the campaign as text grids), rules.hpp (numbers, tuning, Input),
+                                    session.cpp (one run: hero, hazards, crumbles, springs, saws, checkpoints, time)
 src/main.cpp                        AppConfig and runMain
 docs/GAMELIB_REVISION.md            the GameLib commit each change was validated with
 ```
