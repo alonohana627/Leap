@@ -494,6 +494,13 @@ void LeapGame::drawHud(gamelib::draw::DrawList& list, const gamelib::core::Size 
                                   ? std::string{"FINAL"}
                                   : std::to_string(game::worldOf(room) + 1) + "-" + std::to_string(room % 8 + 1);
     const Color accent = worldPalette(paletteWorld(room)).accent;
+    // Dark plates under the text, so a gap in the top border (an exit) never cuts it.
+    const Color plate{0.02f, 0.03f, 0.07f, 0.85f};
+    const float leftWidth = gamelib::draw::textWidth(label, 4.0f) + 28.0f
+                            + gamelib::draw::textWidth(session.roomDef().name, 4.0f);
+    list.box({20.0f, 8.0f, leftWidth + 28.0f, 48.0f}, plate, {.cornerRadius = 10.0f});
+    list.box({static_cast<float>(canvas.width) - 300.0f - 34.0f - 14.0f, 8.0f, 328.0f, 48.0f}, plate,
+             {.cornerRadius = 10.0f});
     list.text(label, 34.0f, 18.0f, {.pixelSize = 4.0f, .color = accent, .shadow = true});
     list.text(std::string{session.roomDef().name}, 34.0f + gamelib::draw::textWidth(label, 4.0f) + 28.0f, 18.0f,
               {.pixelSize = 4.0f, .color = kText.withAlpha(0.85f), .shadow = true});
